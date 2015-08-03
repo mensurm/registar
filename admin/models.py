@@ -218,6 +218,10 @@ drug_substances = db.Table('drug_substances',
                        db.Column('drug_id', GUID(), db.ForeignKey('drugs.id')),
                        db.Column('substance_id', GUID(), db.ForeignKey('substances.id')))
 
+drug_dosages = db.Table('drug_dosages',
+                       db.Column('drug_id', GUID(), db.ForeignKey('drugs.id')),
+                       db.Column('dosage_id', GUID(), db.ForeignKey('dosages.id')))
+
 # class DrugSubstance(db.Model, LogBase):
 #     __tablename__ = 'drug_substances'
 #     id = db.Column(GUID(), primary_key=True)
@@ -236,6 +240,14 @@ class Regime(db.Model, LogBase):
 
     def __unicode__(self):
         return unicode(self.description)
+
+class Dosage(db.Model, LogBase):
+    __tablename__ = 'dosages'
+    id = db.Column(GUID(), default=uuid.uuid4, primary_key = True)
+    dosage = db.Column(db.String(20), nullable=False)
+
+    def __unicode__(self):
+        return unicode(self.dosage)
 
 
 class Drug(db.Model, LogBase):
@@ -262,6 +274,9 @@ class Drug(db.Model, LogBase):
                              backref=db.backref('drugs', lazy='dynamic'))
 
     essential_lists = db.relationship('EssentialList', secondary='drugs_essential_list',
+                             backref=db.backref('drugs', lazy='dynamic'))
+
+    available_dosages = db.relationship('Dosage', secondary=drug_dosages,
                              backref=db.backref('drugs', lazy='dynamic'))
 
 

@@ -3,7 +3,7 @@ __author__ = 'Mensur'
 
 
 from admin import app
-from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, EssentialList
+from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, EssentialList, Dosage
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required, current_user, logout_user
 from flask.ext.security.utils import encrypt_password
 from flask import render_template, redirect, url_for
@@ -110,8 +110,8 @@ class MyDrugAnonymView(MyAnonymAuthView):
 
 class MyDrugView(MyBaseView):
 
-    form_columns = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
-    column_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
+    form_columns = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape','available_dosages', 'regime', 'indication', 'counterindication', 'instructions')
+    column_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'available_dosages','regime', 'indication', 'counterindication', 'instructions')
     column_sortable_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
     column_searchable_list = ('protected_name',)
     column_filters = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
@@ -218,6 +218,18 @@ class MyRegionView(MyBaseView):
     def __init__(self, session, **kwargs):
         # You can pass name and other parameters if you want to
         super(MyRegionView, self).__init__(Region, session,name='Regioni', **kwargs)
+
+
+class MyDosageView(MyBaseView):
+    column_list = ('dosage',)
+    form_columns = ( 'dosage', )
+    column_sortable_list = ( 'dosage', )
+    column_searchable_list = ( 'dosage', )
+
+    def __init__(self, session, **kwargs):
+    # You can pass name and other parameters if you want to
+        super(MyDosageView, self).__init__(Dosage, session,name=u'Jačine', **kwargs)
+
 #
 # class MyView(BaseView):
 #     @expose('/')
@@ -234,6 +246,7 @@ admin.add_view(MyDrugView(db.session))
 admin.add_view(MySubstanceView(db.session))
 admin.add_view(MyManufacturerView(db.session, category='Ostalo'))
 admin.add_view(MyRegimeView(db.session, category='Ostalo'))
+admin.add_view(MyDosageView(db.session, category='Ostalo'))
 admin.add_view(MyEssentialListCategoryView(db.session, category='Ostalo'))
 admin.add_view(MyEssentialListView(db.session, category='Ostalo'))
 admin.add_view(MyRegionView(db.session, category='Ostalo'))
