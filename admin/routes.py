@@ -3,7 +3,7 @@ __author__ = 'Mensur'
 
 
 from admin import app
-from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, EssentialList, Dosage
+from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, EssentialList, Dosage, Shape
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required, current_user, logout_user
 from flask.ext.security.utils import encrypt_password
 from flask import render_template, redirect, url_for
@@ -230,6 +230,15 @@ class MyDosageView(MyBaseView):
     # You can pass name and other parameters if you want to
         super(MyDosageView, self).__init__(Dosage, session,name=u'Jačine', **kwargs)
 
+class MyShapeView(MyBaseView):
+    column_list = ('farmacological_shape', 'description')
+    form_columns = ('farmacological_shape', 'description')
+    column_searchable_list = ('farmacological_shape', 'description')
+    column_sortable_list = ('farmacological_shape', 'description')
+
+    def __init__(self, session, **kwargs):
+        super(MyShapeView, self).__init__(Shape, session, name=u'Farmakološki oblik', **kwargs)
+
 #
 # class MyView(BaseView):
 #     @expose('/')
@@ -247,6 +256,7 @@ admin.add_view(MySubstanceView(db.session))
 admin.add_view(MyManufacturerView(db.session, category='Ostalo'))
 admin.add_view(MyRegimeView(db.session, category='Ostalo'))
 admin.add_view(MyDosageView(db.session, category='Ostalo'))
+admin.add_view(MyShapeView(db.session, category='Ostalo'))
 admin.add_view(MyEssentialListCategoryView(db.session, category='Ostalo'))
 admin.add_view(MyEssentialListView(db.session, category='Ostalo'))
 admin.add_view(MyRegionView(db.session, category='Ostalo'))
