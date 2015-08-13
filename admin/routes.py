@@ -3,7 +3,8 @@ __author__ = 'Mensur'
 
 
 from admin import app
-from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, EssentialList, Dosage, Shape
+from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, \
+    EssentialList, Dosage, Shape, HealthAdvice, TermsOfUse
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required, current_user, logout_user
 from flask.ext.security.utils import encrypt_password
 from flask import render_template, redirect, url_for
@@ -239,6 +240,24 @@ class MyShapeView(MyBaseView):
     def __init__(self, session, **kwargs):
         super(MyShapeView, self).__init__(Shape, session, name=u'Farmakološki oblik', **kwargs)
 
+class MyHealthAdviceView(MyBaseView):
+    column_list = ('title', 'advice_text', 'references')
+    form_columns = ('title', 'advice_text', 'references')
+    column_searchable_list = ('title', 'advice_text', 'references')
+    column_sortable_list = ('title', 'advice_text', 'references')
+
+    def __init__(self, session, **kwargs):
+        super(MyHealthAdviceView, self).__init__(HealthAdvice, session, name=u'Zdravstveni savjeti', **kwargs)
+
+class MyTermsOfUseView(MyBaseView):
+    column_list = ('version', 'terms', 'active')
+    form_columns = ('version', 'terms', 'active')
+    column_searchable_list = ('version', 'terms', 'active')
+    column_sortable_list = ('version', 'terms', 'active')
+
+    def __init__(self, session, **kwargs):
+        super(MyTermsOfUseView, self).__init__(TermsOfUse, session, name=u'Uslovi korištenja', **kwargs)
+
 #
 # class MyView(BaseView):
 #     @expose('/')
@@ -260,6 +279,8 @@ admin.add_view(MyShapeView(db.session, category='Ostalo'))
 admin.add_view(MyEssentialListCategoryView(db.session, category='Ostalo'))
 admin.add_view(MyEssentialListView(db.session, category='Ostalo'))
 admin.add_view(MyRegionView(db.session, category='Ostalo'))
+admin.add_view(MyHealthAdviceView(db.session, category='Ostalo'))
+admin.add_view(MyTermsOfUseView(db.session, category='Ostalo'))
 
 admin.add_view(MyUserView(db.session))
 admin.add_view(MyRoleView(db.session))

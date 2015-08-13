@@ -331,6 +331,20 @@ class Backlog(db.Model):
 
     user_email = db.relationship('User')
 
+
+class HealthAdvice(db.Model, LogBase):
+    __tablename__ = "health_advice"
+    id = db.Column(GUID(), default=uuid.uuid4, primary_key=True, nullable=False)
+    title = db.Column(db.String(128), nullable=False)
+    advice_text = db.Column(db.Text, nullable=False)
+    references = db.Column(db.Text)
+
+class TermsOfUse(db.Model, LogBase):
+    __tablename__ = "terms_of_use"
+    version = db.Column(db.String(32), nullable=False, primary_key=True)
+    terms = db.Column(db.Text, nullable=False)
+    active = db.Column(db.Boolean, nullable=False)
+
 def versioned_objects(iter):
     for obj in iter:
         if isinstance(obj, LogBase) or isinstance(obj,UserBase):
