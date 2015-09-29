@@ -96,7 +96,7 @@ class MyDrugAnonymView(MyAnonymAuthView):
         #column_list = ('protected_name', 'active_substance')
     # Override displayed fields
 
-    form_columns = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
+    form_columns = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'instructions_link')
     # column_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
     # column_sortable_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
     # column_searchable_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
@@ -111,11 +111,11 @@ class MyDrugAnonymView(MyAnonymAuthView):
 
 class MyDrugView(MyBaseView):
 
-    form_columns = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape','available_dosages', 'regime', 'indication', 'counterindication', 'instructions')
-    column_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'available_dosages','regime', 'indication', 'counterindication', 'instructions')
-    column_sortable_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
+    form_columns = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape','available_dosages', 'regime', 'instructions_link')
+    column_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'available_dosages','regime', 'instructions_link')
+    column_sortable_list = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'instructions_link')
     column_searchable_list = ('protected_name',)
-    column_filters = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'indication', 'counterindication', 'instructions')
+    column_filters = ('protected_name', 'manufacturer', 'active_substance', 'additional_substances','shape', 'regime', 'instructions_link')
 
     def __init__(self, session, **kwargs):
         # You can pass name and other parameters if you want to

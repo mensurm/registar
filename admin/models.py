@@ -263,6 +263,7 @@ class Drug(db.Model, LogBase):
     instructions = db.Column(db.Text)
     indication = db.Column(db.Text)
     counterindication = db.Column(db.Text)
+    instructions_link = db.Column(db.String(1024))
 
     manufacturer = db.relationship('Manufacturer')
     active_substance = db.relationship('Substance')
