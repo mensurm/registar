@@ -253,7 +253,7 @@ class Dosage(db.Model, LogBase):
 class Drug(db.Model, LogBase):
     __tablename__ = 'drugs'
     id = db.Column(GUID(),default=uuid.uuid4, primary_key=True)
-    protected_name = db.Column(db.String(128), nullable=False, unique=True)
+    protected_name = db.Column(db.String(128), nullable=False)
 
     manufacturer_id = db.Column(GUID(), db.ForeignKey('manufacturers.id'))
     substance_id = db.Column(GUID(), db.ForeignKey('substances.id'))
