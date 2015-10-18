@@ -285,6 +285,28 @@ class Drug(db.Model, LogBase):
     def __unicode__(self):
         return unicode(self.protected_name)
 
+class AgencyDrug(db.Model, LogBase):
+    __tablename__ = u'agency_drugs'
+    id = db.Column(GUID(),default=uuid.uuid4, primary_key=True)
+    protected_name = db.Column(db.String(256), nullable=False)
+
+    manufacturer_name = db.Column(db.String(512), nullable=False)
+    manufacturer_address = db.Column(db.String(512))
+    manufacturer_city = db.Column(db.String(512))
+    manufacturer_country = db.Column(db.String(512))
+    substance_name = db.Column(db.String(512), nullable=False)
+    atc_classification = db.Column(db.String(128), nullable=False)
+
+    regime_code = db.Column(db.String(32), nullable=False)
+    regime_description = db.Column(db.String(256), nullable=False)
+    shape = db.Column(db.String(512), nullable=False)
+    dosage = db.Column(db.String(512), nullable=False)
+    packaging = db.Column(db.String(512), nullable=False)
+
+    instructions_link = db.Column(db.String(1024))
+
+
+
 class DrugEssentialList(db.Model, LogBase):
     __tablename__ = 'drugs_essential_list'
     id = db.Column(GUID(), default=uuid.uuid4, primary_key=True)

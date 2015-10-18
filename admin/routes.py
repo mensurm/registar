@@ -3,7 +3,7 @@ __author__ = 'Mensur'
 
 
 from admin import app
-from models import db, User,Drug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, \
+from models import db, User,Drug, AgencyDrug, Manufacturer,EssentialListCategory, Role, Substance, Regime, Backlog, Region, \
     EssentialList, Dosage, Shape, HealthAdvice, TermsOfUse
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required, current_user, logout_user
 from flask.ext.security.utils import encrypt_password
@@ -120,6 +120,13 @@ class MyDrugView(MyBaseView):
     def __init__(self, session, **kwargs):
         # You can pass name and other parameters if you want to
         super(MyDrugView, self).__init__(Drug, session,endpoint='drug',name='Lijekovi', **kwargs)
+
+class AgencyDrugView(MyBaseView):
+    page_size = 100
+    column_default_sort = 'protected_name'
+    column_searchable_list = ('protected_name', 'manufacturer_name' , 'regime_code')
+    def __init__(self, session, **kwargs):
+        super(MyBaseView, self).__init__(AgencyDrug, session, endpoint='drugs', name='Lijekovi', **kwargs)
 
 
 class MyManufacturerView(MyBaseView):
@@ -270,7 +277,8 @@ admin = Admin(app, 'Praktični registar lijekova', index_view=MyAdminIndexView()
 
 
 
-admin.add_view(MyDrugView(db.session))
+#admin.add_view(MyDrugView(db.session))
+admin.add_view(AgencyDrugView(db.session))
 admin.add_view(MySubstanceView(db.session))
 admin.add_view(MyManufacturerView(db.session, category='Ostalo'))
 admin.add_view(MyRegimeView(db.session, category='Ostalo'))
